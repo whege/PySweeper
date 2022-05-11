@@ -17,8 +17,6 @@ class Game:
     }
 
     def __init__(self):
-        self._first_move = True
-
         settings = self._get_settings()
         self._answers = AnswerBoard(settings.width, settings.height, settings.mines)
         self._display = DisplayBoard(settings.width, settings.height)
@@ -69,13 +67,8 @@ class Game:
         space = self._answers[coord]
 
         if space.is_mine():
-            if self._first_move:
-                # TODO update board
-                self._first_move = False
-                pass
-            else:
-                space.make_mine()
-                playing = False
+            space.make_mine()
+            playing = False
 
         elif space.is_flag():
             playing = True
