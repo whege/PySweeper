@@ -1,5 +1,5 @@
 __doc__ = """ Class for each space on the board """
-__author__ = """William Hegedusich"""
+__author__ = """whege"""
 __all__ = ["Space"]
 
 from common.assets import *
