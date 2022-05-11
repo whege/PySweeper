@@ -1,5 +1,5 @@
 __doc__ = """ Classes for creating game boards """
-__author__ = """ William Hegedusich """
+__author__ = """ whege """
 __all__ = ["AnswerBoard", "DisplayBoard"]
 
 import random
