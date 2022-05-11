@@ -8,12 +8,6 @@ from typing import List, Tuple
 from common import *
 from spaces import *
 
-_Difficulties = {
-    "Easy": Easy,
-    "Medium": Medium,
-    "Insane": Insane
-}
-
 
 class Board:
     def __init__(self, width: int, height: int):
