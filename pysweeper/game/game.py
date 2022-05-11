@@ -1,5 +1,5 @@
 __doc__ = """ Main game class """
-__author__ = """William Hegedusich"""
+__author__ = """whege"""
 __all__ = ["Game"]
 
 import re
