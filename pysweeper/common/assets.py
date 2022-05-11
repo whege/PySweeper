@@ -1,5 +1,5 @@
 __doc__ = """Classes for the contents of each space on the board """
-__author__ = """William Hegedusich"""
+__author__ = """whege"""
 __all__ = ["Asset", "Flag", "Hint", "Mine", "Empty", "Revealed"]
 
 _unicode_box = "\u25A1"
