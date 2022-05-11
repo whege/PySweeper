@@ -30,12 +30,12 @@ class Board:
         self._board[key[0]][key[1]] = value
 
     def show(self):
-        for _ in self._board:
-            print(" ", end="")
-            for i in _:
-                print(i, end="  ")
-            print()
-        print("\n")
+        for col in self._board:
+            print(" ", end="")  # Add space to beginning of the board to separate it from the edge of the screen
+            for row in col:
+                print(row, end="  ")  # Print individual space on board and stay on the same line
+            print("", end="\n")  # Move to the next line
+        print("\n")  # Add space after the board to separate game board from the next line of input
 
     @property
     def width(self):
