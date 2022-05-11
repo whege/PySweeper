@@ -1,5 +1,5 @@
 __doc__ = """ Constants for game difficulties """
-__author__ = """William Hegedusich"""
+__author__ = """whege"""
 __all__ = ["Difficulty", "Easy", "Medium", "Insane"]
 
 from collections import namedtuple
