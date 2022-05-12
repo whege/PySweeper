@@ -51,9 +51,7 @@ class Game:
         :param coord: Location on the board where the flag will be placed
         :return: None
         """
-        space = self._display[coord].copy()  # Get the Space to be flagged
-        space.make_flag()  # Convert the Space to a flag
-        self._display[coord] = space  # Update the space
+        self._display[coord].make_flag()  # Convert the Space to a flag
         self._flag_locs.append(coord)  # Update the flagged locations
 
         # Check if the locations the user flagged exactly match the mine locations
@@ -100,8 +98,8 @@ class Game:
         :param coord: Tuple coordinate of the space to reveal
         :return: Boolean indicating if the game is still going
         """
-        answer_space = self._answers[coord].copy()
-        display_space = self._display[coord].copy()
+        answer_space = self._answers[coord]
+        display_space = self._display[coord]
 
         if display_space.is_revealed():
             print(f"Space {coord} has already been revealed! Please pick a new space.")
@@ -109,7 +107,6 @@ class Game:
 
         elif answer_space.is_mine():  # If the user revealed a mine, display the mine
             display_space.make_mine()
-            self._display[coord] = display_space
             return False  # Return False to end the game
 
         else:
