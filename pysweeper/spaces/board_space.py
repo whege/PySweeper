@@ -17,19 +17,9 @@ class Space:
 
     def __init__(self, contents: Asset, loc: Tuple[int, int]):
         self._content: Asset = contents
-        self._hint = 0
+        self._hint: Hint = Hint()
         self._loc = loc
         self._neighbors: List[Space] = []
-
-    def add_hint(self) -> None:
-        """
-        Increase the hint counter
-        :return: None
-        """
-        if self._hint == 6:
-            raise RuntimeError("More than six adjacent mines is impossible, wtf is going on?")
-        else:
-            self._hint += 1
 
     def copy(self):
         """
@@ -37,6 +27,14 @@ class Space:
         :return:
         """
         return Space(contents=self._content, loc=self._loc)
+
+    @property
+    def hint(self):
+        return int(self._hint.count)
+
+    @hint.setter
+    def hint(self, num):
+        self._hint.count = num
 
     @property
     def item(self):
