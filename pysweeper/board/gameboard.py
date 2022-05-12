@@ -12,9 +12,9 @@ from spaces import *
 
 class Board:
     def __init__(self, width: int, height: int):
-        self._width = width
-        self._height = height
-        self._board = self._make_empty(self._width, self._height)
+        self._width: int = width
+        self._height: int = height
+        self._board: List[List[Space]] = self._make_empty(self._width, self._height)
 
     def __getitem__(self, item: Tuple[int, int]) -> Space:
         return self._board[item[0]][item[1]]
