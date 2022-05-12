@@ -90,3 +90,6 @@ class Space:
 
     def __repr__(self):
         return repr(self._content)
+
+    def show_hint(self):
+        self._content = self._hint
