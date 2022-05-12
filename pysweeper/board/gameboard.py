@@ -129,3 +129,27 @@ class AnswerBoard(Board):
 class DisplayBoard(Board):
     def __init__(self, width, height):
         super().__init__(width, height)
+
+    def reveal_neighbors(self, space: Space):
+        """
+        When a space is revealed, display the number of adjacent mines.
+        If the space has no adjacent mines, keep checking neighbors until all spaces have at least one adjacent mine.
+        For instance:
+            O O O
+            O O X
+            O O O
+        If the user uncovered the bottom-right space, a Hint of '1' would be uncovered.
+            O O O
+            O O X
+            O O 1
+        However, if the user were to uncover the top-left space,
+        the game should continue revealing spaces until a space either has a Hint displayed or
+        its neighbors are revealed or display their hint
+            [] [] 1
+            [] 1  X
+            [] 1  O
+        :return:
+        """
+        if space.hint != 0:
+            pass
+        pass
