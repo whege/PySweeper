@@ -26,7 +26,11 @@ class Space:
         Create a copy of the space
         :return:
         """
-        return Space(contents=self._content, loc=self._loc)
+        new_space = Space(contents=self._content, loc=self._loc)
+        new_space.hint = self.hint
+        new_space.neighbors = self._neighbors
+
+        return new_space
 
     @property
     def hint(self):
