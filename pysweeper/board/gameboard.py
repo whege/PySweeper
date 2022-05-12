@@ -54,9 +54,10 @@ class Board:
 
 class AnswerBoard(Board):
     def __init__(self, width: int, height: int, n_mines: int, /):
-        super().__init__(width, height)
+        super().__init__(width, height)  # Create a new board
         self._n_mines = n_mines
-        self._add_mines()
+        self._add_mines()  # Add mines to the board
+        self._add_hints()  # Add number of adjacent mines to each space
 
     def _add_mines(self):
         """
@@ -64,15 +65,15 @@ class AnswerBoard(Board):
         Chooses random coordinates. If there is no mine there
         :return:
         """
-        for _ in range(0, self._n_mines):
+        for _ in range(0, self._n_mines):  # Iterate over the number of mines to be added
             while True:
-                x_coord = random.randrange(0, self._width)
-                y_coord = random.randrange(0, self._height)
-                space: Space = self._board[y_coord][x_coord]
+                x_coord = random.randrange(0, self._width)  # Pick a random x coordinate
+                y_coord = random.randrange(0, self._height)  # Pick a random y coordinate
+                space: Space = self._board[y_coord][x_coord]  # Get the Space at that coordinate
 
-                if not space.is_mine():
-                    space.make_mine()
-                    self._board[y_coord][x_coord] = space
+                if not space.is_mine():  # Check that the space is not already a mine
+                    space.make_mine()  # Change the space to a mine
+                    self._board[y_coord][x_coord] = space  # Update the Space
                     break
 
 
