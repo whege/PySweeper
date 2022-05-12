@@ -105,12 +105,14 @@ class AnswerBoard(Board):
             _neighbors: List[Space] = []  # Set neighbors to empty list
 
             # Create a list of relative coordinates to the adjacent spaces, i.e.: [(-1, -1), (-1, 0)....etc]
-            shifts = list(product(range(-1, 2), range(-1, 0)))
+            shifts = list(product(range(-1, 2), range(-1, 2)))
             shifts.remove((0, 0))  # Remove the Space's own coordinates
             assert len(shifts) == 8  # eight neighbors to each space
 
             for y_shift, x_shift in shifts:
                 shifted_coord = (coord[0] + y_shift, coord[1] + x_shift)  # shift up/down/left/right on the board
+                if any(i < 0 for i in shifted_coord):  # Want to avoid negative indexing. (0,0) is not next to (8,8)
+                    continue
                 try:
                     check_space = self.__getitem__(shifted_coord)  # Try to get an adjacent space
                 except IndexError:
