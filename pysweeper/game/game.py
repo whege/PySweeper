@@ -110,14 +110,15 @@ class Game:
                 break
             self._display.show()  # If the game is still going, show the board again
 
+        print("\n")  # Add space between last line and ending output
         if self._win:
-            print("Congrats! You win!")
+            print("Congrats! You win!", end="\n")
         else:
-            print("Game over! ** w o m p  w o m p **")
-            
+            print("Game over! ** w o m p  w o m p **", end="\n")
+
         self._answers.show()  # Show the answers
 
-        return
+        sys.exit(0)
 
 
 if __name__ == '__main__':
