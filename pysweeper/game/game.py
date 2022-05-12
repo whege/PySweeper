@@ -110,7 +110,8 @@ class Game:
             return False  # Return False to end the game
 
         else:
-            self._display.reveal_neighbors(answer_space)  # Update the display board to reveal empty spaces
+            # Update the display board to reveal empty spaces
+            self._display.reveal_neighbors(answer_space, display_space)
             return True  # Reveal True to continue the game
 
     def play(self) -> None:

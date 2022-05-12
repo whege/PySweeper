@@ -130,7 +130,7 @@ class DisplayBoard(Board):
     def __init__(self, width, height):
         super().__init__(width, height)
 
-    def reveal_neighbors(self, space: Space):
+    def reveal_neighbors(self, answer_space: Space, display_space: Space):
         """
         When a space is revealed, display the number of adjacent mines.
         If the space has no adjacent mines, keep checking neighbors until all spaces have at least one adjacent mine.
@@ -150,6 +150,7 @@ class DisplayBoard(Board):
             [] 1  O
         :return:
         """
-        if space.hint != 0:
-            pass
+        if answer_space.hint != 0:
+            display_space.hint = answer_space.hint
+            display_space.show_hint()
         pass
