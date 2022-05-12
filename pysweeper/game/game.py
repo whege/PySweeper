@@ -51,10 +51,17 @@ class Game:
         :param coord: Location on the board where the flag will be placed
         :return: None
         """
-        space = self._display[coord].copy()
-        space.make_flag()
-        self._display[coord] = space
-        return True
+        space = self._display[coord].copy()  # Get the Space to be flagged
+        space.make_flag()  # Convert the Space to a flag
+        self._display[coord] = space  # Update the space
+        self._flag_locs.append(coord)  # Update the flagged locations
+
+        # Check if the locations the user flagged exactly match the mine locations
+        if sorted(self._flag_locs, key=lambda x: x[0]) == self._mine_locs:
+            self._win = True  # If so, flag a win
+            return False  # Return False to end game
+        else:
+            return True  # Return True to continue game
 
     def _handle_input(self) -> bool:
         """
