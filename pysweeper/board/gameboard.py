@@ -19,6 +19,10 @@ class Board:
     def __getitem__(self, item: Tuple[int, int]) -> Space:
         return self._board[item[0]][item[1]]
 
+    def __iter__(self):
+        for row in self._board:
+            yield from row
+
     @property
     def height(self) -> int:
         return self._height
