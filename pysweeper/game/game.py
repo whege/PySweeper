@@ -67,6 +67,10 @@ class Game:
 
         x_coord, y_coord = tuple(map(lambda x: int(x.strip()), coord.split(',')))
 
+        if (x_coord < 0) or (x_coord > self._answers.width) or (y_coord < 0) or (y_coord > self._answers.height):
+            print("That space is out of bounds! Pick again")
+            self._handle_input()
+
         if action == "R":
             self._handle_reveal((y_coord, x_coord))
 
