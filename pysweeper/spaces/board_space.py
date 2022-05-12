@@ -47,16 +47,16 @@ class Space:
         self._content = new_item
 
     def is_empty(self) -> bool:
-        return isinstance(self._content, Empty)
+        return type(self._content).__name__ == "_Empty"
 
     def is_flag(self) -> bool:
-        return isinstance(self._content, Flag)
+        return type(self._content).__name__ == "_Flag"
 
     def is_mine(self) -> bool:
-        return isinstance(self._content, Mine)
+        return type(self._content).__name__ == "_Mine"
 
     def is_revealed(self) -> bool:
-        return isinstance(self._content, Revealed)
+        return type(self._content).__name__ == "_Revealed"
 
     @property
     def loc(self) -> Tuple[int, int]:
@@ -64,16 +64,16 @@ class Space:
         return self._loc
 
     def make_empty(self):
-        self._content = Empty()
+        self._content = Empty
 
     def make_flag(self):
-        self._content = Flag()
+        self._content = Flag
 
     def make_mine(self):
-        self._content = Mine()
+        self._content = Mine
 
     def make_revealed(self):
-        self._content = Revealed()
+        self._content = Revealed
 
     @property
     def neighbors(self):
