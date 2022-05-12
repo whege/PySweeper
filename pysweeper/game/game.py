@@ -103,18 +103,18 @@ class Game:
         answer_space = self._answers[coord].copy()
         display_space = self._display[coord].copy()
 
-        if space.is_mine():
-            space.make_mine()
-            playing = False
+        if display_space.is_revealed():
+            print(f"Space {coord} has already been revealed! Please pick a new space.")
+            return True
 
-        elif space.is_flag():
-            playing = True
+        elif answer_space.is_mine():  # If the user revealed a mine, display the mine
+            display_space.make_mine()
+            self._display[coord] = display_space
+            return False  # Return False to end the game
 
         else:
-            space.make_revealed()
-            playing = False
-
-        self._display[coord] = space
+            self._display.reveal_neighbors(answer_space)  # Update the display board to reveal empty spaces
+            return True  # Reveal True to continue the game
 
     def play(self) -> None:
         """
