@@ -23,6 +23,10 @@ class Game:
 
     @staticmethod
     def _get_settings() -> Difficulty:
+        """
+        Handles user input for game setup and returns the Difficulty chosen
+        :return:
+        """
         while True:
             choices = Game._Difficulties.keys()
             difficulty = str(input(f"Select a difficulty: {', '.join(choices)} ")).capitalize()
@@ -35,12 +39,21 @@ class Game:
                 continue
 
     def _handle_flag(self, coord: Tuple[int, int]) -> bool:
+        """
+        If the user flags a spot, convert the icon in that spot to a flag
+        :param coord: Location on the board where the flag will be placed
+        :return: None
+        """
         space = self._display[coord]
         space.make_flag()
         self._display[coord] = space
         return True
 
-    def _handle_input(self):
+    def _handle_input(self) -> bool:
+        """
+        Accept and handle input from the user
+        :return: Boolean indicating if the game is active or not
+        """
         action = str(input("Enter a command (R to reveal or F to flag), followed by a coordinate x, y: "))
         action, coord = action[:1], action[1:].strip()
 
@@ -63,7 +76,12 @@ class Game:
         else:
             raise RuntimeError
 
-    def _handle_reveal(self, coord: Tuple[int, int]):
+    def _handle_reveal(self, coord: Tuple[int, int]) -> bool:
+        """
+        If the user has opted to reveal a space, handle the revelation
+        :param coord: Tuple coordinate of the space to reveal
+        :return: Boolean indicating if the game is still going
+        """
         space = self._answers[coord]
 
         if space.is_mine():
@@ -79,8 +97,12 @@ class Game:
 
         self._display[coord] = space
 
-    def play(self):
-        self._display.show()
+    def play(self) -> None:
+        """
+        Main game loop
+        :return: None
+        """
+        self._display.show()  # show the board to start the game
 
         while True:
             still_playing = self._handle_input()
