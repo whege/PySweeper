@@ -3,6 +3,7 @@ __author__ = """whege"""
 __all__ = ["Game"]
 
 import re
+import sys
 from typing import Tuple
 
 from board import *
@@ -20,6 +21,12 @@ class Game:
         settings = self._get_settings()
         self._answers = AnswerBoard(settings.width, settings.height, settings.mines)
         self._display = DisplayBoard(settings.width, settings.height)
+        self._flag_locs = []  # Variable for storing the coordinates a user has flagged
+        # Store location of all mines
+        self._mine_locs = sorted(
+            [s.loc for s in self._answers if s.is_mine()], key=lambda x: x[0]
+        )
+        self._win = False  # Flag for whether use has won
 
     @staticmethod
     def _get_settings() -> Difficulty:
@@ -72,10 +79,10 @@ class Game:
             self._handle_input()
 
         if action == "R":
-            self._handle_reveal((y_coord, x_coord))
+            return self._handle_reveal((y_coord, x_coord))
 
         elif action == "F":
-            self._handle_flag((y_coord, x_coord))
+            return self._handle_flag((y_coord, x_coord))
 
         else:
             raise RuntimeError
