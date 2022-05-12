@@ -2,7 +2,7 @@ __doc__ = """ Classes for creating game boards """
 __author__ = """ whege """
 __all__ = ["AnswerBoard", "DisplayBoard"]
 
-from itertools import permutations, product
+from itertools import product
 import random
 from typing import List, Tuple
 
@@ -62,6 +62,7 @@ class AnswerBoard(Board):
         super().__init__(width, height)  # Create a new board
         self._n_mines = n_mines
         self._add_mines()  # Add mines to the board
+        self._set_neighbors()  # Set the neighbors for each space on the board
         self._add_hints()  # Add number of adjacent mines to each space
 
     def _add_mines(self):
@@ -74,32 +75,50 @@ class AnswerBoard(Board):
             while True:
                 x_coord = random.randrange(0, self._width)  # Pick a random x coordinate
                 y_coord = random.randrange(0, self._height)  # Pick a random y coordinate
-                space: Space = self._board[y_coord][x_coord]  # Get the Space at that coordinate
+                space: Space = self.__getitem__((y_coord, x_coord))  # Get the Space at that coordinate
 
                 if not space.is_mine():  # Check that the space is not already a mine
                     space.make_mine()  # Change the space to a mine
-                    self._board[y_coord][x_coord] = space  # Update the Space
+                    self.__setitem__((y_coord, x_coord), space)  # Update the Space
                     break
 
-    def _add_hints(self):
+    def _add_hints(self) -> None:
         """
         Add hints to the spaces based on the number of mines touching that space
         :return: None
         """
-        for coord in product(range(self.height), range(self.width)):
-            if (space := self.__getitem__(coord)).is_mine():  # Get the current space
+        for space in self.__iter__():  # Iterate over the spaces in the board
+            if space.is_mine():
                 continue  # If the Space is a mine, it won't have hints
 
+            else:  # o.w. count the number of neighbors that are mines, and set Hint to the value
+                space.hint = sum([1 if n.is_mine() else 0 for n in space.neighbors])
+
+    def _set_neighbors(self) -> None:
+        """
+        Iterate over all Spaces in the board
+        Set the neighboring Spaces for a given Space
+        :return: None
+        """
+        for space in self.__iter__():  # Iterate over the spaces in the board
+            coord: Tuple[int, int] = space.loc  # Get the coordinates of the Space
+            _neighbors: List[Space] = []  # Set neighbors to empty list
+
             # Create a list of relative coordinates to the adjacent spaces, i.e.: [(-1, -1), (-1, 0)....etc]
-            for y_shift, x_shift in list(permutations(range(-1, 2), 2)):
+            shifts = list(product(range(-1, 2), range(-1, 0)))
+            shifts.remove((0, 0))  # Remove the Space's own coordinates
+            assert len(shifts) == 8  # eight neighbors to each space
+
+            for y_shift, x_shift in shifts:
+                shifted_coord = (coord[0] + y_shift, coord[1] + x_shift)  # shift up/down/left/right on the board
                 try:
-                    shifted_coord = (coord[0] + y_shift, coord[1] + x_shift)
-                    check_space = self.__getitem__(shifted_coord)  # Try to get the adjacent space
+                    check_space = self.__getitem__(shifted_coord)  # Try to get an adjacent space
                 except IndexError:
                     continue  # Doing this naively, so we might go off the board, in which case we skip
                 else:
-                    if check_space.is_mine():
-                        space.add_hint()  # If the adjacent space is a mine, increment the hints
+                    _neighbors.append(check_space)  # o.w. we append the space to the neighbors
+
+            space.neighbors = _neighbors  # Set the Space's neighbors
 
 
 class DisplayBoard(Board):
