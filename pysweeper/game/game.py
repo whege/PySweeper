@@ -105,8 +105,18 @@ class Game:
         self._display.show()  # show the board to start the game
 
         while True:
-            still_playing = self._handle_input()
-            self._display.show()
+            if not self._handle_input():  # Handle user input, which returns True if user is still playing
+                break
+            self._display.show()  # If the game is still going, show the board again
+
+        if self._win:
+            print("Congrats! You win!")
+        else:
+            print("Game over! ** w o m p  w o m p **")
+            
+        self._answers.show()  # Show the answers
+
+        return
 
 
 if __name__ == '__main__':
