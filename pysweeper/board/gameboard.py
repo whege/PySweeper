@@ -15,21 +15,31 @@ class Board:
         self._height = height
         self._board = self._make_empty(self._width, self._height)
 
-    def __getitem__(self, item: Tuple[int, int]):
+    def __getitem__(self, item: Tuple[int, int]) -> Space:
         return self._board[item[0]][item[1]]
 
     @property
-    def height(self):
+    def height(self) -> int:
         return self._height
 
     @staticmethod
     def _make_empty(width: int, height: int, /) -> List[List[Space]]:
+        """
+        Create an empty game board of the specified dimensions
+        :param width: Width of board
+        :param height: Height of board
+        :return: (width, height)-shaped array of Empty Space instances
+        """
         return [[Space(Empty()) for _ in range(height)] for _ in range(width)]
 
-    def __setitem__(self, key: Tuple[int, int], value: Space):
+    def __setitem__(self, key: Tuple[int, int], value: Space) -> None:
         self._board[key[0]][key[1]] = value
 
-    def show(self):
+    def show(self) -> None:
+        """
+        Print the board
+        :return: None
+        """
         for col in self._board:
             print(" ", end="")  # Add space to beginning of the board to separate it from the edge of the screen
             for row in col:
@@ -38,7 +48,7 @@ class Board:
         print("\n")  # Add space after the board to separate game board from the next line of input
 
     @property
-    def width(self):
+    def width(self) -> int:
         return self._width
 
 
@@ -49,6 +59,11 @@ class AnswerBoard(Board):
         self._add_mines()
 
     def _add_mines(self):
+        """
+        Add mines to the answer board
+        Chooses random coordinates. If there is no mine there
+        :return:
+        """
         for _ in range(0, self._n_mines):
             while True:
                 x_coord = random.randrange(0, self._width)
