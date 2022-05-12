@@ -2,18 +2,22 @@ __doc__ = """ Class for each space on the board """
 __author__ = """whege"""
 __all__ = ["Space"]
 
+from typing import Tuple
+
 from common.assets import *
 
 
 class Space:
     __slots__ = (
         "_content",
-        "_hint"
+        "_hint",
+        "_loc",
     )
 
-    def __init__(self, contents: Asset):
+    def __init__(self, contents: Asset, loc: Tuple[int, int]):
         self._content: Asset = contents
         self._hint = 0
+        self._loc = loc
 
     def add_hint(self) -> None:
         """
@@ -30,11 +34,7 @@ class Space:
         Create a copy of the space
         :return:
         """
-        return Space(contents=self._content)
-
-    def get_neighbors(self):
-        # TODO
-        raise NotImplementedError
+        return Space(contents=self._content, loc=self._loc)
 
     @property
     def item(self):
@@ -55,6 +55,11 @@ class Space:
 
     def is_revealed(self) -> bool:
         return isinstance(self._content, Revealed)
+
+    @property
+    def loc(self) -> Tuple[int, int]:
+        """ Return tuple of coordinates for the space on the board"""
+        return self._loc
 
     def make_empty(self):
         self._content = Empty()
