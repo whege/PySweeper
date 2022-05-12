@@ -37,6 +37,9 @@ class Board:
         """
         return [[Space(Empty, (i, j)) for i in range(height)] for j in range(width)]
 
+    def __repr__(self):
+        return self.show()
+
     def __setitem__(self, key: Tuple[int, int], value: Space) -> None:
         self._board[key[0]][key[1]] = value
 
