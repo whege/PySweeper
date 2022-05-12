@@ -35,7 +35,7 @@ class Board:
         :param height: Height of board
         :return: (width, height)-shaped array of Empty Space instances
         """
-        return [[Space(Empty()) for _ in range(height)] for _ in range(width)]
+        return [[Space(Empty, (i, j)) for i in range(height)] for j in range(width)]
 
     def __setitem__(self, key: Tuple[int, int], value: Space) -> None:
         self._board[key[0]][key[1]] = value
