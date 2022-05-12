@@ -14,6 +14,13 @@ class Space:
     def __init__(self, contents: Asset):
         self._content: Asset = contents
 
+    def copy(self):
+        """
+        Create a copy of the space
+        :return:
+        """
+        return Space(contents=self._content)
+
     def get_neighbors(self):
         # TODO
         raise NotImplementedError

@@ -44,7 +44,7 @@ class Game:
         :param coord: Location on the board where the flag will be placed
         :return: None
         """
-        space = self._display[coord]
+        space = self._display[coord].copy()
         space.make_flag()
         self._display[coord] = space
         return True
@@ -82,7 +82,8 @@ class Game:
         :param coord: Tuple coordinate of the space to reveal
         :return: Boolean indicating if the game is still going
         """
-        space = self._answers[coord]
+        answer_space = self._answers[coord].copy()
+        display_space = self._display[coord].copy()
 
         if space.is_mine():
             space.make_mine()
