@@ -35,7 +35,7 @@ class Board:
         :param height: Height of board
         :return: (width, height)-shaped array of Empty Space instances
         """
-        return [[Space(Empty, (i, j)) for i in range(height)] for j in range(width)]
+        return [[Space(Empty, (j, i)) for i in range(width)] for j in range(height)]
 
     def __repr__(self):
         return self.show()
