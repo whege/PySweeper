@@ -13,6 +13,17 @@ class Space:
 
     def __init__(self, contents: Asset):
         self._content: Asset = contents
+        self._hint = 0
+
+    def add_hint(self) -> None:
+        """
+        Increase the hint counter
+        :return: None
+        """
+        if self._hint == 6:
+            raise RuntimeError("More than six adjacent mines is impossible, wtf is going on?")
+        else:
+            self._hint += 1
 
     def copy(self):
         """
