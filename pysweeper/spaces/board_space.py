@@ -2,7 +2,7 @@ __doc__ = """ Class for each space on the board """
 __author__ = """whege"""
 __all__ = ["Space"]
 
-from typing import Tuple
+from typing import List, Tuple
 
 from common.assets import *
 
@@ -12,12 +12,14 @@ class Space:
         "_content",
         "_hint",
         "_loc",
+        "_neighbors"
     )
 
     def __init__(self, contents: Asset, loc: Tuple[int, int]):
         self._content: Asset = contents
         self._hint = 0
         self._loc = loc
+        self._neighbors: List[Space] = []
 
     def add_hint(self) -> None:
         """
@@ -75,7 +77,14 @@ class Space:
 
     @property
     def neighbors(self):
-        raise NotImplementedError
+        return self._neighbors
+
+    @neighbors.setter
+    def neighbors(self, nbrs: List, /):
+        if not all(isinstance(i, self.__class__) for i in nbrs):
+            raise TypeError("Neighbors must all be instances of Space")
+        else:
+            self._neighbors = nbrs
 
     def __repr__(self):
         return repr(self._content)
