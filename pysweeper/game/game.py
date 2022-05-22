@@ -111,8 +111,44 @@ class Game:
 
         else:
             # Update the display board to reveal empty spaces
-            self._display.reveal_neighbors(answer_space, display_space)
+            self._reveal(answer_space, display_space)
             return True  # Reveal True to continue the game
+
+    def _reveal(self, answer_space, display_space) -> None:
+        """
+        When a space is revealed, display the number of adjacent mines.
+        If the space has no adjacent mines, keep checking neighbors until all spaces have at least one adjacent mine.
+        For instance:
+            O O O
+            O O X
+            O O O
+        If the user uncovered the bottom-right space, a Hint of '1' would be uncovered.
+            O O O
+            O O X
+            O O 1
+        However, if the user were to uncover the top-left space,
+        the game should continue revealing spaces until a space either has a Hint displayed or
+        its neighbors are revealed or display their hint
+            [] [] 1
+            [] 1  X
+            [] 1  O
+        :return:
+        """
+        if (hint := answer_space.hint) != 0:
+            display_space.hint = hint
+            display_space.show_hint()
+            return
+
+        elif display_space.is_revealed():
+            return
+
+        else:
+            display_space.make_revealed()
+
+            for nbr in answer_space.neighbors:
+                self._reveal(answer_space=nbr, display_space=self._display[nbr.loc])
+
+            return
 
     def play(self) -> None:
         """
