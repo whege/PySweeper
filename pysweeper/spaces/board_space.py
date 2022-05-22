@@ -37,6 +37,22 @@ class Space:
     def item(self, new_item: Asset, /):
         self._content = new_item
 
+    @property
+    def loc(self) -> Tuple[int, int]:
+        """ Return tuple of coordinates for the space on the board"""
+        return self._loc
+
+    @property
+    def neighbors(self):
+        return self._neighbors
+
+    @neighbors.setter
+    def neighbors(self, nbrs: List, /):
+        if not all(isinstance(i, self.__class__) for i in nbrs):
+            raise TypeError("Neighbors must all be instances of Space")
+        else:
+            self._neighbors = nbrs
+
     def is_empty(self) -> bool:
         return type(self._content).__name__ == "_Empty"
 
@@ -48,11 +64,6 @@ class Space:
 
     def is_revealed(self) -> bool:
         return type(self._content).__name__ == "_Revealed"
-
-    @property
-    def loc(self) -> Tuple[int, int]:
-        """ Return tuple of coordinates for the space on the board"""
-        return self._loc
 
     def make_empty(self):
         self._content = Empty
@@ -66,19 +77,8 @@ class Space:
     def make_revealed(self):
         self._content = Revealed
 
-    @property
-    def neighbors(self):
-        return self._neighbors
-
-    @neighbors.setter
-    def neighbors(self, nbrs: List, /):
-        if not all(isinstance(i, self.__class__) for i in nbrs):
-            raise TypeError("Neighbors must all be instances of Space")
-        else:
-            self._neighbors = nbrs
+    def show_hint(self):
+        self._content = self._hint
 
     def __repr__(self):
         return repr(self._content)
-
-    def show_hint(self):
-        self._content = self._hint
