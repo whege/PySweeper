@@ -16,32 +16,21 @@ class Board:
         self._height: int = height
         self._board: List[List[Space]] = self._make_empty(self._width, self._height)
 
-    def __getitem__(self, item: Tuple[int, int]) -> Space:
-        return self._board[item[0]][item[1]]
-
-    def __iter__(self):
-        for row in self._board:
-            yield from row
-
     @property
     def height(self) -> int:
+        """
+        Return the height of the board
+        :return:
+        """
         return self._height
 
-    @staticmethod
-    def _make_empty(width: int, height: int, /) -> List[List[Space]]:
+    @property
+    def width(self) -> int:
         """
-        Create an empty game board of the specified dimensions
-        :param width: Width of board
-        :param height: Height of board
-        :return: (width, height)-shaped array of Empty Space instances
+        Return the board's width
+        :return:
         """
-        return [[Space(Empty, (j, i)) for i in range(width)] for j in range(height)]
-
-    def __repr__(self):
-        return self.show()
-
-    def __setitem__(self, key: Tuple[int, int], value: Space) -> None:
-        self._board[key[0]][key[1]] = value
+        return self._width
 
     def show(self) -> None:
         """
@@ -55,9 +44,36 @@ class Board:
             print("", end="\n")  # Move to the next line
         print("\n")  # Add space after the board to separate game board from the next line of input
 
-    @property
-    def width(self) -> int:
-        return self._width
+    @staticmethod
+    def _make_empty(width: int, height: int, /) -> List[List[Space]]:
+        """
+        Create an empty game board of the specified dimensions
+        :param width: Width of board
+        :param height: Height of board
+        :return: (width, height)-shaped array of Empty Space instances
+        """
+        return [[Space(Empty, (j, i)) for i in range(width)] for j in range(height)]
+
+    def __getitem__(self, item: Tuple[int, int]) -> Space:
+        """
+        Allow indexing into the board by coordinates
+        :param item: location tuple
+        :return:
+        """
+        return self._board[item[0]][item[1]]
+
+    def __iter__(self):
+        """
+        Iterator for the board; return all spaces on the board
+        """
+        for row in self._board:
+            yield from row
+
+    def __repr__(self):
+        return self.show()
+
+    def __setitem__(self, key: Tuple[int, int], value: Space) -> None:
+        self._board[key[0]][key[1]] = value
 
 
 class AnswerBoard(Board):
@@ -67,6 +83,18 @@ class AnswerBoard(Board):
         self._add_mines()  # Add mines to the board
         self._set_neighbors()  # Set the neighbors for each space on the board
         self._add_hints()  # Add number of adjacent mines to each space
+
+    def _add_hints(self) -> None:
+        """
+        Add hints to the spaces based on the number of mines touching that space
+        :return: None
+        """
+        for space in self.__iter__():  # Iterate over the spaces in the board
+            if space.is_mine():
+                continue  # If the Space is a mine, it won't have hints
+
+            else:  # o.w. count the number of neighbors that are mines, and set Hint to the value
+                space.hint = sum([1 if n.is_mine() else 0 for n in space.neighbors])
 
     def _add_mines(self):
         """
@@ -84,18 +112,6 @@ class AnswerBoard(Board):
                     space.make_mine()  # Change the space to a mine
                     self.__setitem__((y_coord, x_coord), space)  # Update the Space
                     break
-
-    def _add_hints(self) -> None:
-        """
-        Add hints to the spaces based on the number of mines touching that space
-        :return: None
-        """
-        for space in self.__iter__():  # Iterate over the spaces in the board
-            if space.is_mine():
-                continue  # If the Space is a mine, it won't have hints
-
-            else:  # o.w. count the number of neighbors that are mines, and set Hint to the value
-                space.hint = sum([1 if n.is_mine() else 0 for n in space.neighbors])
 
     def _set_neighbors(self) -> None:
         """
