@@ -103,10 +103,10 @@ class Space:
 
     def is_revealed(self) -> bool:
         """
-        Check if the space has been revealed
+        Check if the space has been revealed, either by being made empty or showing hint
         :return:
         """
-        return type(self._content).__name__ == "_Revealed"
+        return type(self._content).__name__ in ["_Revealed", "Hint"]
 
     def make_empty(self):
         """
