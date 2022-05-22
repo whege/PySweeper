@@ -4,7 +4,7 @@ __all__ = ["Space"]
 
 from typing import List, Tuple
 
-from common.assets import *
+from pysweeper.common.assets import *
 
 
 class Space:

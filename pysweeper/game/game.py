@@ -6,8 +6,8 @@ import re
 import sys
 from typing import Tuple
 
-from board import *
-from common import *
+from pysweeper.board import *
+from pysweeper.common import *
 
 
 class Game:

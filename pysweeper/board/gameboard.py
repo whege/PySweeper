@@ -6,8 +6,8 @@ from itertools import product
 import random
 from typing import List, Tuple
 
-from common import *
-from spaces import *
+from pysweeper.common import *
+from pysweeper.spaces import *
 
 
 class Board:
