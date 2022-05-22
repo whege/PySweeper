@@ -24,7 +24,7 @@ class Game:
         self._flag_locs = []  # Variable for storing the coordinates a user has flagged
         # Store location of all mines
         self._mine_locs = sorted(
-            [s.loc for s in self._answers if s.is_mine()], key=lambda x: x[0]
+            [s.loc for s in self._answers if s.is_mine()]
         )
         self._win = False  # Flag for whether use has won
 
@@ -55,7 +55,7 @@ class Game:
         self._flag_locs.append(coord)  # Update the flagged locations
 
         # Check if the locations the user flagged exactly match the mine locations
-        if sorted(self._flag_locs, key=lambda x: x[0]) == self._mine_locs:
+        if sorted(self._flag_locs) == self._mine_locs:
             self._win = True  # If so, flag a win
             return False  # Return False to end game
         else:
