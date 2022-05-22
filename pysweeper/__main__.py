@@ -2,7 +2,7 @@ __doc__ = """ Entry point for the game """
 __author__ = """ whege """
 __all__ = []
 
-from .game import Game
+from pysweeper.game import Game
 
 
 def main():
